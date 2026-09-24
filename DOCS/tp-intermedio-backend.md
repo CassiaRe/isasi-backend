@@ -15,18 +15,16 @@ Sistema de gestión y cotización de muebles a medida para Isasi Muebles, utiliz
 
 ## Descripción del proyecto
 
-El sistema permitirá que los clientes registrados soliciten presupuestos estimativos para muebles a medida, indicando dimensiones, características y materiales.
+El sistema permitirá a los clientes registrados solicitar presupuestos estimativos de muebles a medida. En cada solicitud deberán especificar el tipo de mueble, sus medidas, el material y las características necesarias para cotizarlo. También podrán adjuntar fotografías o croquis como información complementaria.
 
-El objetivo del proyecto es automatizar progresivamente el cálculo de presupuestos mediante una base de datos de materiales y precios, reduciendo el tiempo dedicado a las cotizaciones manuales.
+El objetivo es organizar las solicitudes y los precios de los materiales en una base de datos que permita, en una etapa posterior, automatizar el cálculo de presupuestos y reducir el tiempo de cotización.
 
 El sistema contemplará dos roles:
 
-- **Cliente:** podrá registrarse, configurar sus muebles, solicitar presupuestos y consultar su historial.
-- **Administrador:** podrá gestionar los materiales, actualizar los precios y administrar las solicitudes.
+- **Cliente:** podrá registrarse, completar y enviar solicitudes con las medidas, los materiales y las características de cada mueble, adjuntar documentación y consultar el estado y el historial de sus solicitudes.
+- **Administrador:** podrá mantener el catálogo de materiales y precios, revisar las solicitudes, completar las cotizaciones y actualizar su estado.
 
-Para generar un presupuesto online, el cliente deberá proporcionar información suficiente sobre el mueble solicitado, incluyendo medidas y características.
-
-Los proyectos que necesiten desarrollo de diseño o que no cuenten con información suficiente se derivarán a una atención personalizada.
+La cotización online estará destinada a muebles con medidas, materiales y características definidos. Si faltan datos o el proyecto requiere desarrollar una propuesta de diseño, la consulta se atenderá de manera personalizada.
 
 En esta primera etapa académica se desarrollará exclusivamente el diseño de la base de datos. La automatización de los cálculos se implementará posteriormente.
 
@@ -92,12 +90,12 @@ Contiene las solicitudes realizadas por los clientes, los muebles incluidos y lo
 | montoDescuento | Number | Importe descontado |
 | total | Number | Importe final |
 | estado | String | Estado del presupuesto |
-| fechaCreacion | Date | Fecha de emisión |
-| fechaVencimiento | Date | Límite de validez |
+| fechaCreacion | Date | Fecha de creación de la solicitud |
+| fechaVencimiento | Date | Vencimiento del presupuesto emitido, cuando corresponda |
 
-Los estados previstos son: solicitado, en_revision, cotizado, aceptado, rechazado y vencido.
+Los estados previstos son: solicitado, en_revision, cotizado, aceptado, rechazado y vencido. Los importes se completarán al preparar la cotización; una solicitud recién enviada puede no tener precios todavía.
 
-La validez del presupuesto se determinará mediante la fecha de vencimiento.
+La validez se establecerá cuando se emita el presupuesto y se determinará mediante la fecha de vencimiento.
 
 ## 2.2. Estructura de los ítems
 
@@ -121,6 +119,7 @@ Los ítems se almacenarán como objetos embebidos dentro del presupuesto.
 | precioUnitario | Number | Precio de una unidad |
 | precioItem | Number | Importe total del ítem |
 | observaciones | String | Información adicional |
+| adjuntos | Array | Rutas o URL de fotografías y croquis opcionales |
 
 El precio del material y su nombre se conservarán dentro del ítem como registro de los valores utilizados al emitir el presupuesto.
 
@@ -183,6 +182,7 @@ erDiagram
         Number precioUnitario
         Number precioItem
         String observaciones
+        Array adjuntos
     }
 ```
 
@@ -330,7 +330,7 @@ Los precios son exclusivamente ilustrativos y no representan los valores comerci
   {
     "_id": { "$oid": "650000000000000000000001" },
     "nombre": "Laura",
-    "apellido": "Gomez",
+    "apellido": "Gómez",
     "email": "laura@example.com",
     "telefono": "1100000001",
     "passwordHash": "HASH_FICTICIO_1",
@@ -342,7 +342,7 @@ Los precios son exclusivamente ilustrativos y no representan los valores comerci
   },
   {
     "_id": { "$oid": "650000000000000000000002" },
-    "nombre": "Martin",
+    "nombre": "Martín",
     "apellido": "Fernandez",
     "email": "martin@example.com",
     "telefono": "1100000002",
@@ -399,7 +399,7 @@ Los hashes son marcadores ficticios utilizados únicamente para documentar el es
   },
   {
     "_id": { "$oid": "660000000000000000000003" },
-    "nombre": "Madera de paraiso",
+    "nombre": "Madera de paraíso",
     "categoria": "madera",
     "precioReferencia": 125000,
     "unidadCalculo": "m2",
@@ -444,7 +444,8 @@ El cliente solicita un bajo mesada de melamina blanca, con cinco cajones y dos p
       "precioMaterialAlCotizar": 42000,
       "precioUnitario": 650000,
       "precioItem": 650000,
-      "observaciones": "Herrajes estandar"
+      "observaciones": "Herrajes estándar",
+      "adjuntos": []
     }
   ],
   "subtotal": 650000,
@@ -490,7 +491,8 @@ Se aplica un descuento general del 5 % sobre el conjunto.
       "precioMaterialAlCotizar": 42000,
       "precioUnitario": 850000,
       "precioItem": 850000,
-      "observaciones": "Instalacion a evaluar"
+      "observaciones": "Instalación a evaluar",
+      "adjuntos": ["/ejemplos/croquis-cocina.pdf"]
     },
     {
       "tipoMueble": "Alacena",
@@ -508,7 +510,8 @@ Se aplica un descuento general del 5 % sobre el conjunto.
       "precioMaterialAlCotizar": 89000,
       "precioUnitario": 480000,
       "precioItem": 480000,
-      "observaciones": "Apertura tradicional"
+      "observaciones": "Apertura tradicional",
+      "adjuntos": []
     }
   ],
   "subtotal": 1330000,
@@ -527,7 +530,7 @@ Se aplica un descuento general del 5 % sobre el conjunto.
 
 ### Presupuesto 3: placard
 
-El cliente solicita un placard a medida con terminación en madera.
+El cliente solicita un placard a medida con terminación en madera de paraíso.
 
 ```json
 {
@@ -548,11 +551,12 @@ El cliente solicita un placard a medida con terminación en madera.
       "materialId": {
         "$oid": "660000000000000000000003"
       },
-      "materialNombreAlCotizar": "Madera de paraiso",
+      "materialNombreAlCotizar": "Madera de paraíso",
       "precioMaterialAlCotizar": 125000,
       "precioUnitario": 1700000,
       "precioItem": 1700000,
-      "observaciones": "Distribucion interior definida por el cliente"
+      "observaciones": "Distribución interior definida por el cliente",
+      "adjuntos": []
     }
   ],
   "subtotal": 1700000,
