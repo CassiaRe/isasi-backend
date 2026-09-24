@@ -87,15 +87,17 @@ Contiene las solicitudes realizadas por los clientes, los muebles incluidos y lo
 | _id | ObjectId | Identificador único |
 | usuarioId | ObjectId | Referencia al cliente |
 | items | Array | Muebles incluidos |
-| subtotal | Number | Suma de los ítems |
-| porcentajeDescuento | Number | Descuento aplicado |
-| montoDescuento | Number | Importe descontado |
-| total | Number | Importe final |
+| subtotal | Number | Suma de los ítems; null hasta cotizar |
+| porcentajeDescuento | Number | Descuento aplicado; null hasta cotizar |
+| montoDescuento | Number | Importe descontado; null hasta cotizar |
+| total | Number | Importe final; null hasta cotizar |
 | estado | String | Estado del presupuesto |
 | fechaCreacion | Date | Fecha de creación de la solicitud |
-| fechaVencimiento | Date | Vencimiento del presupuesto emitido, cuando corresponda |
+| fechaVencimiento | Date | Vencimiento del presupuesto emitido; null antes de emitir |
 
 Los estados previstos son: solicitado, en_revision, cotizado, aceptado, rechazado y vencido. Los importes se completarán al preparar la cotización; una solicitud recién enviada puede no tener precios todavía.
+
+**Regla para solicitudes pendientes:** cuando el presupuesto todavía no está cotizado, `subtotal`, `porcentajeDescuento`, `montoDescuento` y `total` permanecen en `null`, al igual que los campos de precio del ítem y `fechaVencimiento` si aún no se emitió. El valor `0` se reserva para un importe efectivamente calculado en cero (por ejemplo, un descuento del 0 %); no significa «pendiente». Al emitir la cotización se registran los precios unitarios e importes de cada mueble, luego se calcula el subtotal, el descuento general, el monto descontado y el total final.
 
 La validez se establecerá cuando se emita el presupuesto y se determinará mediante la fecha de vencimiento.
 
@@ -116,16 +118,23 @@ Los ítems se almacenarán como objetos embebidos dentro del presupuesto.
 | cantidadPuertas | Number | Número de puertas |
 | cantidadCajones | Number | Número de cajones |
 | materialId | ObjectId | Referencia a materiales |
-| materialNombreAlCotizar | String | Nombre del material utilizado |
-| precioMaterialAlCotizar | Number | Precio de referencia al cotizar |
-| precioUnitario | Number | Precio de una unidad |
-| precioItem | Number | Importe total del ítem |
+| materialNombreAlCotizar | String | Nombre del material utilizado; null antes de cotizar |
+| precioMaterialAlCotizar | Number | Precio de referencia al cotizar; null antes de cotizar |
+| precioUnitario | Number | Precio de una unidad; null hasta cotizar |
+| precioItem | Number | Importe total del ítem; null hasta cotizar |
 | observaciones | String | Información adicional |
 | adjuntos | Array | Rutas o URL de fotografías y croquis opcionales |
 
 El precio del material y su nombre se conservarán dentro del ítem como registro de los valores utilizados al emitir el presupuesto.
 
 ## 2.3. Diagrama de relaciones
+
+![Diagrama del modelo MongoDB de Isasi Muebles con tres colecciones, referencias e ítems embebidos](diagrama-modelo-isasi.svg)
+
+**Cómo leerlo:** USUARIOS se vincula con PRESUPUESTOS por `usuarioId` (1:N). Cada presupuesto contiene uno o varios objetos embebidos en `items` (1:N). Cada ítem referencia a MATERIALES mediante `materialId` (1:N desde Materiales hacia los ítems). Los colores identifican colecciones y el recuadro interior identifica los datos embebidos, que **no forman una cuarta colección**. Las tablas 2.1 y 2.2 muestran el esquema completo; la ilustración destaca sus campos principales.
+
+<details>
+<summary>Ver también el diagrama técnico Mermaid original</summary>
 
 ```mermaid
 erDiagram
@@ -187,6 +196,8 @@ erDiagram
         Array adjuntos
     }
 ```
+
+</details>
 
 **Aclaración:** ITEMS_EMBEBIDOS no constituye una cuarta colección. Representa los objetos almacenados en el array `items` de cada presupuesto.
 
@@ -418,6 +429,8 @@ Los tres materiales pertenecen al catálogo de ejemplo y pueden ser utilizados p
 La unidad de cálculo real de cada producto se definirá al construir el catálogo definitivo.
 
 ## 5.3. Colección presupuestos
+
+Los tres ejemplos muestran presupuestos ya cotizados o aceptados, por eso los importes tienen valores numéricos. Una solicitud todavía sin cotizar conservaría esos importes en `null`, no en `0`.
 
 ### Presupuesto 1: bajo mesada
 
