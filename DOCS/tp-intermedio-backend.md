@@ -4,6 +4,7 @@
 ### Diseño de base de datos MongoDB
 
 **Curso:** Backend Developer  
+Allumna Cassia Regina Dias
 **Proyecto:** Sistema de presupuestos estimativos para Isasi Muebles  
 **Fecha:** 24/09/2026
 
