@@ -1,0 +1,155 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2100 1470" width="2100" height="1470" role="img" aria-labelledby="title desc"><title id="title">Modelo MongoDB: Isasi Muebles, usuarios, presupuestos y materiales</title><desc id="desc">Usuarios se relaciona uno a muchos con Presupuestos mediante usuarioId. Presupuestos contiene de uno a muchos ítems como objetos embebidos en el array items. Cada ítem referencia un Material mediante materialId y un material puede usarse en muchos ítems. Solo hay tres colecciones.</desc>
+<defs><marker id="arrowBrown" markerWidth="13" markerHeight="13" refX="10" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#73503C"/></marker><marker id="arrowGreen" markerWidth="13" markerHeight="13" refX="10" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#487963"/></marker></defs>
+<rect x="0" y="0" width="2100" height="1470" rx="0" fill="#FBF9F8" stroke="none" stroke-width="1"/>
+<rect x="0" y="0" width="2100" height="14" rx="0" fill="#F2A93B" stroke="none" stroke-width="1"/>
+<rect x="85" y="72" width="10" height="132" rx="5" fill="#F2A93B" stroke="none" stroke-width="1"/>
+<text x="118" y="94" fill="#3A2A1F" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="700" letter-spacing="5">ISASI MUEBLES</text>
+<text x="118" y="161" fill="#3A2A1F" font-family="Arial, Helvetica, sans-serif" font-size="62" font-weight="700" >Modelo de datos</text>
+<text x="120" y="209" fill="#62554B" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="400" >Sistema de presupuestos estimativos · MongoDB</text>
+<rect x="1650" y="72" width="355" height="51" rx="25" fill="#3A2A1F" stroke="none" stroke-width="1"/>
+<text x="1828" y="106" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="700" text-anchor="middle">TP INTERMEDIO · BACKEND</text>
+<rect x="90" y="246" width="1920" height="72" rx="13" fill="#F2EDE7" stroke="none" stroke-width="1"/>
+<text x="125" y="292" fill="#3A2A1F" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="700" letter-spacing="2">GUÍA DE LECTURA</text>
+<line x1="350" y1="264" x2="350" y2="300" stroke="#CABBB0" stroke-width="2"/>
+<text x="380" y="291" fill="#73503C" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="700" >Flecha = referencia por ObjectId</text>
+<text x="860" y="291" fill="#B07521" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="700" >Recuadro interior = objeto embebido</text>
+<text x="1440" y="291" fill="#3A2A1F" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="700" >Solo 3 colecciones</text>
+<rect x="90" y="358" width="515" height="574" rx="15" fill="#FFFFFF" stroke="#9BB2C5" stroke-width="3"/>
+<rect x="90" y="358" width="515" height="92" rx="15" fill="#EAF1F7" stroke="none" stroke-width="1"/>
+<rect x="118" y="386" width="49" height="49" rx="25" fill="#2B628C" stroke="none" stroke-width="1"/>
+<text x="142.5" y="419" fill="white" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" text-anchor="middle">01</text>
+<text x="187" y="417" fill="#234D70" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="700" >USUARIOS</text>
+<text x="120" y="484" fill="#496E8A" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" letter-spacing="1.5">COLECCIÓN · QUIÉN SOLICITA</text>
+<text x="125" y="538" fill="#3A2A1F" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" >_id</text>
+<text x="571" y="538" fill="#706A65" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="400" text-anchor="end">ObjectId</text>
+<line x1="121" y1="552" x2="573" y2="552" stroke="#E5DEDA" stroke-width="2"/>
+<text x="125" y="596" fill="#3A2A1F" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" >nombre</text>
+<text x="571" y="596" fill="#706A65" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="400" text-anchor="end">String</text>
+<line x1="121" y1="610" x2="573" y2="610" stroke="#E5DEDA" stroke-width="2"/>
+<text x="125" y="654" fill="#3A2A1F" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" >email</text>
+<text x="571" y="654" fill="#706A65" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="400" text-anchor="end">String · único</text>
+<line x1="121" y1="668" x2="573" y2="668" stroke="#E5DEDA" stroke-width="2"/>
+<text x="125" y="712" fill="#3A2A1F" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" >rol</text>
+<text x="571" y="712" fill="#706A65" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="400" text-anchor="end">String</text>
+<line x1="121" y1="726" x2="573" y2="726" stroke="#E5DEDA" stroke-width="2"/>
+<text x="125" y="770" fill="#3A2A1F" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" >passwordHash</text>
+<text x="571" y="770" fill="#706A65" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="400" text-anchor="end">String</text>
+<line x1="121" y1="784" x2="573" y2="784" stroke="#E5DEDA" stroke-width="2"/>
+<text x="125" y="828" fill="#3A2A1F" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" >fechaRegistro</text>
+<text x="571" y="828" fill="#706A65" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="400" text-anchor="end">Date</text>
+<line x1="121" y1="842" x2="573" y2="842" stroke="#E5DEDA" stroke-width="2"/>
+<text x="128" y="893" fill="#64747E" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="400" >Además: apellido, teléfono, activo</text>
+<rect x="730" y="346" width="700" height="915" rx="17" fill="#FFFFFF" stroke="#BD8542" stroke-width="4"/>
+<rect x="730" y="346" width="700" height="98" rx="17" fill="#F7E6D1" stroke="none" stroke-width="1"/>
+<rect x="758" y="370" width="52" height="52" rx="26" fill="#A96323" stroke="none" stroke-width="1"/>
+<text x="784" y="406" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" text-anchor="middle">02</text>
+<text x="830" y="407" fill="#633C1F" font-family="Arial, Helvetica, sans-serif" font-size="39" font-weight="700" >PRESUPUESTOS</text>
+<rect x="1217" y="369" width="186" height="52" rx="27" fill="#FFFFFF" stroke="#D2A372" stroke-width="2"/>
+<text x="1310" y="402" fill="#844B21" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" text-anchor="middle">PRINCIPAL</text>
+<text x="764" y="481" fill="#9B683A" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" letter-spacing="1.2">CAMPOS PRINCIPALES</text>
+<text x="771" y="525" fill="#3A2A1F" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" >_id</text>
+<text x="1386" y="525" fill="#706A65" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="400" text-anchor="end">ObjectId</text>
+<line x1="767" y1="539" x2="1388" y2="539" stroke="#E5DEDA" stroke-width="2"/>
+<rect x="759" y="539" width="621" height="43" rx="6" fill="#FFF8E7" stroke="none" stroke-width="1"/>
+<text x="771" y="570" fill="#8A551C" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="700" >usuarioId</text>
+<text x="1386" y="570" fill="#8A551C" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="400" text-anchor="end">ObjectId · ref.</text>
+<line x1="767" y1="584" x2="1388" y2="584" stroke="#E5DEDA" stroke-width="2"/>
+<rect x="759" y="584" width="621" height="43" rx="6" fill="#FFF8E7" stroke="none" stroke-width="1"/>
+<text x="771" y="615" fill="#8A551C" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="700" >items</text>
+<text x="1386" y="615" fill="#8A551C" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="400" text-anchor="end">Array · embebido</text>
+<line x1="767" y1="629" x2="1388" y2="629" stroke="#E5DEDA" stroke-width="2"/>
+<text x="771" y="660" fill="#3A2A1F" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" >estado</text>
+<text x="1386" y="660" fill="#706A65" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="400" text-anchor="end">String</text>
+<line x1="767" y1="674" x2="1388" y2="674" stroke="#E5DEDA" stroke-width="2"/>
+<text x="771" y="705" fill="#3A2A1F" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" >subtotal</text>
+<text x="1386" y="705" fill="#706A65" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="400" text-anchor="end">Number / null</text>
+<line x1="767" y1="719" x2="1388" y2="719" stroke="#E5DEDA" stroke-width="2"/>
+<text x="771" y="750" fill="#3A2A1F" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" >porcentajeDescuento</text>
+<text x="1386" y="750" fill="#706A65" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="400" text-anchor="end">Number / null</text>
+<line x1="767" y1="764" x2="1388" y2="764" stroke="#E5DEDA" stroke-width="2"/>
+<text x="771" y="795" fill="#3A2A1F" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" >montoDescuento</text>
+<text x="1386" y="795" fill="#706A65" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="400" text-anchor="end">Number / null</text>
+<line x1="767" y1="809" x2="1388" y2="809" stroke="#E5DEDA" stroke-width="2"/>
+<text x="771" y="840" fill="#3A2A1F" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" >total</text>
+<text x="1386" y="840" fill="#706A65" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="400" text-anchor="end">Number / null</text>
+<line x1="767" y1="854" x2="1388" y2="854" stroke="#E5DEDA" stroke-width="2"/>
+<rect x="761" y="865" width="638" height="61" rx="9" fill="#FFF7E9" stroke="none" stroke-width="1"/>
+<text x="783" y="890" fill="#684C32" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" >Los importes pueden quedar en null hasta cotizar.</text>
+<text x="783" y="913" fill="#796956" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="400" >Fechas y demás campos: ver tablas del documento.</text>
+<rect x="774" y="948" width="611" height="273" rx="13" fill="#FFFDF8" stroke="#E1B55B" stroke-width="3"/>
+<rect x="774" y="948" width="611" height="61" rx="13" fill="#F8EACD" stroke="none" stroke-width="1"/>
+<text x="800" y="990" fill="#8D5D16" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" >ÍTEMS EMBEBIDOS</text>
+<rect x="1193" y="962" width="167" height="34" rx="17" fill="#FFFFFF" stroke="none" stroke-width="1"/>
+<text x="1276" y="986" fill="#9B6B25" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" text-anchor="middle">NO COLECCIÓN</text>
+<text x="804" y="1044" fill="#3A2A1F" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" >tipoMueble</text>
+<text x="1050" y="1044" fill="#706A65" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="400" text-anchor="end">String</text>
+<line x1="800" y1="1058" x2="1052" y2="1058" stroke="#E5DEDA" stroke-width="2"/>
+<text x="804" y="1093" fill="#3A2A1F" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" >anchoCm</text>
+<text x="1050" y="1093" fill="#706A65" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="400" text-anchor="end">Number</text>
+<line x1="800" y1="1107" x2="1052" y2="1107" stroke="#E5DEDA" stroke-width="2"/>
+<text x="804" y="1142" fill="#3A2A1F" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" >cantidad</text>
+<text x="1050" y="1142" fill="#706A65" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="400" text-anchor="end">Number</text>
+<line x1="800" y1="1156" x2="1052" y2="1156" stroke="#E5DEDA" stroke-width="2"/>
+<rect x="1082" y="1013" width="255" height="43" rx="6" fill="#FFF8E7" stroke="none" stroke-width="1"/>
+<text x="1094" y="1044" fill="#8A551C" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="700" >materialId</text>
+<text x="1343" y="1044" fill="#8A551C" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="400" text-anchor="end">ObjectId</text>
+<line x1="1090" y1="1058" x2="1345" y2="1058" stroke="#E5DEDA" stroke-width="2"/>
+<text x="1094" y="1093" fill="#3A2A1F" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" >precioUnitario</text>
+<text x="1343" y="1093" fill="#706A65" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="400" text-anchor="end">Number</text>
+<line x1="1090" y1="1107" x2="1345" y2="1107" stroke="#E5DEDA" stroke-width="2"/>
+<text x="1094" y="1142" fill="#3A2A1F" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" >precioItem</text>
+<text x="1343" y="1142" fill="#706A65" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="400" text-anchor="end">Number</text>
+<line x1="1090" y1="1156" x2="1345" y2="1156" stroke="#E5DEDA" stroke-width="2"/>
+<text x="803" y="1193" fill="#7D664D" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="400" >Más atributos, medidas y adjuntos en la tabla 2.2.</text>
+<text x="788" y="1243" fill="#80572C" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" >1 presupuesto contiene uno o varios ítems propios.</text>
+<rect x="1590" y="358" width="425" height="574" rx="15" fill="#FFFFFF" stroke="#9AB9A7" stroke-width="3"/>
+<rect x="1590" y="358" width="425" height="92" rx="15" fill="#E7F2EB" stroke="none" stroke-width="1"/>
+<rect x="1618" y="386" width="49" height="49" rx="25" fill="#487963" stroke="none" stroke-width="1"/>
+<text x="1642.5" y="419" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" text-anchor="middle">03</text>
+<text x="1687" y="417" fill="#356A54" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" >MATERIALES</text>
+<text x="1623" y="484" fill="#487963" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" letter-spacing="1.2">COLECCIÓN · CATÁLOGO</text>
+<text x="1626" y="538" fill="#3A2A1F" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" >_id</text>
+<text x="1970" y="538" fill="#706A65" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="400" text-anchor="end">ObjectId</text>
+<line x1="1622" y1="552" x2="1972" y2="552" stroke="#E5DEDA" stroke-width="2"/>
+<text x="1626" y="596" fill="#3A2A1F" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" >nombre</text>
+<text x="1970" y="596" fill="#706A65" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="400" text-anchor="end">String</text>
+<line x1="1622" y1="610" x2="1972" y2="610" stroke="#E5DEDA" stroke-width="2"/>
+<text x="1626" y="654" fill="#3A2A1F" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" >categoria</text>
+<text x="1970" y="654" fill="#706A65" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="400" text-anchor="end">String</text>
+<line x1="1622" y1="668" x2="1972" y2="668" stroke="#E5DEDA" stroke-width="2"/>
+<text x="1626" y="712" fill="#3A2A1F" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" >precioReferencia</text>
+<text x="1970" y="712" fill="#706A65" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="400" text-anchor="end">Number</text>
+<line x1="1622" y1="726" x2="1972" y2="726" stroke="#E5DEDA" stroke-width="2"/>
+<text x="1626" y="770" fill="#3A2A1F" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" >unidadCalculo</text>
+<text x="1970" y="770" fill="#706A65" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="400" text-anchor="end">String</text>
+<line x1="1622" y1="784" x2="1972" y2="784" stroke="#E5DEDA" stroke-width="2"/>
+<text x="1626" y="828" fill="#3A2A1F" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="400" >activo</text>
+<text x="1970" y="828" fill="#706A65" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="400" text-anchor="end">Boolean</text>
+<line x1="1622" y1="842" x2="1972" y2="842" stroke="#E5DEDA" stroke-width="2"/>
+<text x="1628" y="893" fill="#607969" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="400" >Además: fechaActualizacion</text>
+<path d="M605 578 H730" fill="none" stroke="#73503C" stroke-width="5" marker-end="url(#arrowBrown)"/>
+<rect x="614" y="527" width="106" height="40" rx="20" fill="#FFF4DD" stroke="#D8B079" stroke-width="1.5"/>
+<text x="667" y="554" fill="#71471F" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" text-anchor="middle">1 : N</text>
+<text x="615" y="623" fill="#73503C" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700" >usuarioId</text>
+<path d="M1590 704 H1490 V1068 H1385" fill="none" stroke="#487963" stroke-width="5" stroke-linejoin="round" marker-end="url(#arrowGreen)"/>
+<rect x="1444" y="964" width="95" height="76" rx="16" fill="#EAF5EE" stroke="#A2C5AF" stroke-width="2"/>
+<text x="1491" y="991" fill="#356A54" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" text-anchor="middle">1 : N</text>
+<text x="1491" y="1019" fill="#356A54" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" text-anchor="middle">ref.</text>
+<text x="91" y="1320" fill="#3A2A1F" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700" letter-spacing="2">RELACIONES DEL MODELO</text>
+<line x1="92" y1="1336" x2="2005" y2="1336" stroke="#DED7D0" stroke-width="2"/>
+<rect x="90" y="1356" width="585" height="85" rx="11" fill="#EAF1F7" stroke="none" stroke-width="1"/>
+<rect x="105" y="1375" width="44" height="44" rx="22" fill="#2B628C" stroke="none" stroke-width="1"/>
+<text x="127" y="1404" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700" text-anchor="middle">1</text>
+<text x="162" y="1390" fill="#2B628C" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="700" >USUARIOS → PRESUPUESTOS</text>
+<text x="162" y="1419" fill="#554C43" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="400" >Un cliente puede realizar N presupuestos.</text>
+<rect x="695" y="1356" width="705" height="85" rx="11" fill="#FFF1D8" stroke="none" stroke-width="1"/>
+<rect x="710" y="1375" width="44" height="44" rx="22" fill="#966119" stroke="none" stroke-width="1"/>
+<text x="732" y="1404" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700" text-anchor="middle">2</text>
+<text x="767" y="1390" fill="#966119" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="700" >PRESUPUESTOS → ÍTEMS</text>
+<text x="767" y="1419" fill="#554C43" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="400" >Cada ítem vive dentro de su presupuesto.</text>
+<rect x="1420" y="1356" width="590" height="85" rx="11" fill="#E7F2EB" stroke="none" stroke-width="1"/>
+<rect x="1435" y="1375" width="44" height="44" rx="22" fill="#487963" stroke="none" stroke-width="1"/>
+<text x="1457" y="1404" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700" text-anchor="middle">3</text>
+<text x="1492" y="1390" fill="#487963" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="700" >MATERIALES → ÍTEMS</text>
+<text x="1492" y="1419" fill="#554C43" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="400" >Un material puede usarse en N ítems.</text>
+</svg>
